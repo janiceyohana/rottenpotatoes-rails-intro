@@ -30,10 +30,10 @@ steps:
       ]
 
 substitutions:
-  _REGION: [YOUR REGION ]
-  _SERVICE_NAME: [YOUR SERVICE]
-  _INSTANCE_NAME: [CLOUD SQL INSTANCE NAME]
+  _REGION: asia-southeast1
+  _SERVICE_NAME: rails-intro
+  _INSTANCE_NAME: railsintroinstance
 
 images:
   - "gcr.io/${PROJECT_ID}/${_SERVICE_NAME}"
-# [END cloudrun_rails_cloudbuild]
+# [END cloudrun_rails_cloudbuild]k0
