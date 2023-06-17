@@ -7,7 +7,7 @@ class Movie < ActiveRecord::Base
     if ratings_list.length() > 0
       reformatted_ratings_list = ratings_list.map { |rating| rating.upcase }
       Movie.where(rating: reformatted_ratings_list)
-    else if ratings_list.length = 0
+    else ratings_list.length = 0
       Movie.all
     end
   end
