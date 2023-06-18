@@ -4,13 +4,11 @@ class MoviesController < ApplicationController
   # GET /movies
   def index
     @all_ratings = Movie.all_ratings
-    
-    @ratings_to_show_hash = params[:ratings] session[:ratings] @all_ratings.map{ |rating| [rating, "1"] }.to_h
-    
+    @ratings_to_show_hash = params[:ratings] || session[:ratings] || @all_ratings.map{ |rating| [rating, "1"] }.to_h
     @movies = Movie.with_ratings(@ratings_to_show_hash.keys)
-    @sort_column = params[:sort_by] || session[:sort_by]
+    @sort_column = params[:sort] || session[:sort]
     
-    session[:sort_by] = @sort_column
+    session[:sort] = @sort_column
     session[:ratings] = @ratings_to_show_hash
 
     case @sort_column
@@ -30,7 +28,6 @@ class MoviesController < ApplicationController
 
   # GET /movies/new
   def new
-    @movie = Movie.new
   end
 
   # GET /movies/1/edit
@@ -40,12 +37,9 @@ class MoviesController < ApplicationController
 
   # POST /movies
   def create
-    @movie = Movie.new(movie_params)
-
-    if @movie.save
-      redirect_to @movie, notice: 'Movie was successfully created.'
-    else
-      render :new
+    @movie = Movie.create!(movie_params)
+    flash[:notice] =  "#{@movie.title} was successfully created."
+    redirect_to movies_path
     end
   end
   
@@ -75,4 +69,3 @@ class MoviesController < ApplicationController
     def movie_params
       params.require(:movie).permit(:title, :rating, :description, :release_date)
     end
-end
